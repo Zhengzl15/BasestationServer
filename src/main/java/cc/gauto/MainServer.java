@@ -10,10 +10,9 @@ public class MainServer {
     private static final Logger logger = Logger.getLogger(MainServer.class);
 
     public static void main(String []args) throws Exception {
-        int tcpPort = 8081;
+        //基站和K528的端口一对一
+        int hjBasePort = 8081;
+        int hjK528Port = 8082;
 
-        BasestationServer server = new BasestationServer(tcpPort);
-        server.start();
-        server.join();
     }
 }
