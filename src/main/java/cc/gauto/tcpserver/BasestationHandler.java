@@ -33,7 +33,7 @@ public class BasestationHandler extends SimpleChannelInboundHandler {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         String body = (String)msg;
-        logger.info("recv: " + body);
+        logger.info("recv " + body.length() + " on " + ctx.channel().localAddress());
         this.dataQueue.offer(body, 2, TimeUnit.SECONDS);
     }
 

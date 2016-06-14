@@ -1,0 +1,14 @@
+<xml version="1.0" encoding="UTF-8" >
+    <region>
+        <baseport>6061</baseport>
+        <k528port>6062</k528port>
+    </region>
+    <region>
+        <baseport>7071</baseport>
+        <k528port>7072</k528port>
+    </region>
+    <region>
+        <baseport>8081</baseport>
+        <k528port>8082</k528port>
+    </region>
+</xml>
