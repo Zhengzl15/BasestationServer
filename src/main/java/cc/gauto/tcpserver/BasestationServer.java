@@ -18,13 +18,18 @@ import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import org.apache.log4j.Logger;
+import sun.awt.image.ImageWatched;
+
+import java.util.concurrent.LinkedBlockingDeque;
 
 public class BasestationServer extends Thread {
     private static final Logger logger = Logger.getLogger(BasestationServer.class.getName());
     private int port;
+    private LinkedBlockingDeque dataQueue;
 
-    public BasestationServer(int port) {
+    public BasestationServer(int port, LinkedBlockingDeque queue) {
         this.port = port;
+        this.dataQueue = queue;
     }
 
     public void run() {
@@ -33,22 +38,22 @@ public class BasestationServer extends Thread {
 
         try {
             ServerBootstrap b = new ServerBootstrap();
-            b.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class);
+            b.group(bossGroup, workerGroup)
+                    .channel(NioServerSocketChannel.class)
+                    .option(ChannelOption.SO_BACKLOG, 1024);
             b.childHandler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 public void initChannel(SocketChannel ch) throws Exception {
                     ch.pipeline().addLast(
                             new LineBasedFrameDecoder(1024),
                             new StringDecoder(),
-                            new BasestationHandler());
+                            new BasestationHandler(dataQueue));
                 }
             });
-            b.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 10000);
-            b.option(ChannelOption.SO_BACKLOG, 1024);
-
+            //b.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 10000);
             // Bind and start to accept incoming connections.
             Channel ch = b.bind(port).sync().channel();
-            logger.info("TCP Server started on port [" + port + "]");
+            logger.info("Basestation Server started on port [" + port + "]");
 
             ch.closeFuture().sync();
         } catch (Exception e) {

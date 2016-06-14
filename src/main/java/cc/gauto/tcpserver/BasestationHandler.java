@@ -5,18 +5,36 @@ package cc.gauto.tcpserver;
  * @Email zhengzl0715@163.com
  * @Date 2016-06-13 20:47
  */
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.apache.log4j.Logger;
 import org.apache.log4j.net.SyslogAppender;
 
+import java.io.UnsupportedEncodingException;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.TimeUnit;
+
 public class BasestationHandler extends SimpleChannelInboundHandler {
     private static final Logger logger = Logger.getLogger(BasestationHandler.class.getName());
+    private LinkedBlockingDeque dataQueue;
+
+    public BasestationHandler() {
+        super();
+    }
+
+    public BasestationHandler(LinkedBlockingDeque queue) {
+        this.dataQueue = queue;
+    }
+
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         String body = (String)msg;
-        System.out.println(body);
+        logger.info("recv: " + body);
+        this.dataQueue.offer(body, 2, TimeUnit.SECONDS);
     }
 
     @Override

@@ -15,6 +15,8 @@ import io.netty.handler.codec.string.StringDecoder;
 import io.netty.util.concurrent.ImmediateEventExecutor;
 import org.apache.log4j.Logger;
 
+import java.util.concurrent.LinkedBlockingDeque;
+
 /**
  * @Author Zhilong Zheng
  * @Email zhengzl0715@163.com
@@ -25,9 +27,9 @@ public class K528Server extends Thread {
     private int port;
     private ChannelGroup clients;
 
-    public K528Server(int port) {
+    public K528Server(int port, ChannelGroup group) {
         this.port = port;
-        clients = new DefaultChannelGroup(ImmediateEventExecutor.INSTANCE);
+        this.clients = group;
     }
 
     public void run() {
@@ -51,7 +53,7 @@ public class K528Server extends Thread {
 
             // Bind and start to accept incoming connections.
             Channel ch = b.bind(port).sync().channel();
-            logger.info("TCP Server started on port [" + port + "]");
+            logger.info("K528 Server started on port [" + port + "]");
 
             ch.closeFuture().sync();
         } catch (Exception e) {

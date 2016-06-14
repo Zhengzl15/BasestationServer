@@ -5,6 +5,8 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
 import org.apache.log4j.Logger;
 
+import java.util.concurrent.LinkedBlockingDeque;
+
 /**
  * @Author Zhilong Zheng
  * @Email zhengzl0715@163.com
@@ -25,8 +27,6 @@ public class K528Handler extends SimpleChannelInboundHandler {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        String body = (String) msg;
-        System.out.println(body);
     }
 
     @Override
