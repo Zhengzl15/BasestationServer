@@ -46,7 +46,7 @@ public class BasestationHandler extends SimpleChannelInboundHandler {
          */
     @Override
     public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
-        logger.info("A new client connected: " + ctx.channel().remoteAddress());
+        logger.info("A new basestation connected: " + ctx.channel().remoteAddress());
         super.channelRegistered(ctx);
     }
 
@@ -55,7 +55,7 @@ public class BasestationHandler extends SimpleChannelInboundHandler {
      */
     @Override
     public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
-        logger.info("A client disconnected: " + ctx.channel().localAddress());
+        logger.info("A basestation disconnected: " + ctx.channel().localAddress());
         super.channelUnregistered(ctx);
     }
 

@@ -50,6 +50,7 @@ public class K528Handler extends SimpleChannelInboundHandler {
     public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
         logger.info("A k528 client disconnected: " + ctx.channel().localAddress());
         super.channelUnregistered(ctx);
+        group.remove(ctx.channel());
     }
 
     @Override

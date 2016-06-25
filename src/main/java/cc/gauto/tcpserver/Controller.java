@@ -50,7 +50,7 @@ public class Controller extends Thread {
                 String data = (String) dataQueue.poll(2, TimeUnit.SECONDS);
                 if (data != null) {
                     logger.info("send: " + data + "groupsize + " + this.clientGroup.size());
-                    this.clientGroup.writeAndFlush(getSendByteBuf("hello"));
+                    this.clientGroup.writeAndFlush(getSendByteBuf(data));
                 }
             } catch (Exception e) {
                 e.printStackTrace();

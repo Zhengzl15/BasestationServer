@@ -43,7 +43,7 @@ public class K528Server extends Thread {
                 @Override
                 public void initChannel(SocketChannel ch) throws Exception {
                     ch.pipeline().addLast(
-                            new LineBasedFrameDecoder(1024),
+                            //new LineBasedFrameDecoder(1024),
                             new StringDecoder(),
                             new K528Handler(clients));
                 }

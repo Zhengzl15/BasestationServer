@@ -45,7 +45,7 @@ public class BasestationServer extends Thread {
                 @Override
                 public void initChannel(SocketChannel ch) throws Exception {
                     ch.pipeline().addLast(
-                            new LineBasedFrameDecoder(1024),
+                            //new LineBasedFrameDecoder(1024),
                             new StringDecoder(),
                             new BasestationHandler(dataQueue));
                 }
